@@ -108,7 +108,7 @@ void display(int count, bool win, string guesses)
 		cout << "   |   /||\\" << endl;
 		cout << "   |    /\\" << endl;
 	}
-	else if (count == 7)
+	else
 	{
 		cout << "   |    |" << endl; 
 		cout << "   |    ()" << endl;
