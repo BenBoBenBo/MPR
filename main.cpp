@@ -23,21 +23,17 @@ int main(int argc, const char * argv[])
 	}
 	cout << endl;
 	
-	int count = 0;
-	int a = 0;
-	bool b = true;
-	char c[26] = "ninjaChicken2000";
+	int count = 0; //test
+	int a = 0; //test
+	bool b = true; //test
+	char c[26] = "ninjaChicken2000"; //test
 	
-	while (count < 7)
+	while (count < 8)
 	{
 		display(count, b, c);
 		count++;
 	}
-
-
-
-	display(a, b, c);
-
+	cin.ignore();
 	return 0;
 }
 
@@ -53,34 +49,79 @@ string initMagicWord()
 
 void display(int count, bool win, string guesses)
 {
-	cout << "    ____" << endl;
-	cout << "   |    '\'" << endl;
+		cout << "    ____" << endl;
+		cout << "   |    \\" << endl;
 
-	//ROW 1
-	if (count = 7) { cout << "   |    |" << endl; }
-	else { cout << "   |     " << endl; };
-
-	//ROW 2
-	if (count == 0) { cout << "   |      " << endl; }
-	else { cout << "   |    ()" << endl; };
-
-	//ROW 3
-	if (count < 2) { cout << "   |       " << endl; }
-	else if (count = 2) { cout << "   |    || " << endl; }
-	else if (count = 3) { cout << "   |    ||'\'" << endl; }
-	else { cout << "   |   /||'\'" << endl; }
-
-	//ROW 4
-	if (count < 5) { cout << "   |      " << endl; }
-	else if (count = 5) { cout << "   |     '\'" << endl; }
-	else { cout << "   |    /'\'" << endl; }
-
-	if (win == false) { cout << "   | YOU LOST!" << endl; }
-	else cout << "   |" << endl;
-
-	cout << "[][][][][][][][]" << endl;
+	if (count == 0) //beginning of game.
+	{
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+	}
+	else if (count == 1)
+	{
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   |    ()" << endl;
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+	}
+	else if (count == 2)
+	{
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   |    ()" << endl;
+		cout << "   |    ||" << endl;
+		cout << "   | " << endl;
+	}
+	else if (count == 3)
+	{
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   |    ()" << endl;
+		cout << "   |   /||" << endl;
+		cout << "   | " << endl;
+	}
+	else if (count == 4)
+	{
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   |    ()" << endl;
+		cout << "   |   /||\\" << endl;
+		cout << "   | " << endl;
+	}
+	else if (count == 5)
+	{
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   |    ()" << endl;
+		cout << "   |   /||\\" << endl;
+		cout << "   |    /" << endl;
+	}
+	else if (count == 6)
+	{
+		cout << "   | " << endl;
+		cout << "   | " << endl;
+		cout << "   |    ()" << endl;
+		cout << "   |   /||\\" << endl;
+		cout << "   |    /\\" << endl;
+	}
+	else if (count == 7)
+	{
+		cout << "   |    |" << endl; 
+		cout << "   |    ()" << endl;
+		cout << "   |   /||\\" << endl;
+		cout << "   |    /\\" << endl;
+		cout << "   |" << endl;
+	}
+		cout << "[][][][][][][][]" << endl;
+}
 
 	//cout << "-----------------------------------" << endl;
 	//cout << "GUESSES: ABCDEFGHIJKLMNOPQRSTUVWXYZ" << endl;
 	//cout << "-----------------------------------" << endl;
-}
+
+//adding new line below...
+
