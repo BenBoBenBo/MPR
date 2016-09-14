@@ -7,52 +7,111 @@
 using namespace std;
 
 string initMagicWord();
-void display(int count, bool win, string guesses);
+string initHiddenWord(string);
+bool processGuess(int, string &, int &, string, string &);
+void display(int, string, string);
+
 
 int main(int argc, const char * argv[])
 {
-	string magicWord = initMagicWord(); //Need to clear the console in order to hide the magicWord.
-	int wordLength = magicWord.length();     //I'd like to initialize the hiddenWord by magicWord's length. need const or workaround though...
-	string hiddenWord[30];
+	string magicWord = initMagicWord();
+	string hiddenWord = initHiddenWord(magicWord);
 	
-	//initial display 
-	for (int i = 0; i < wordLength; i++)
+	int lives = 7;
+	int guessCount = 0;
+	string guessLetters = "                         ";
+	char guess;
+
+	
+	while (lives > 0)
 	{
-		hiddenWord[i] = '?';
-		cout << hiddenWord[i];
+		cout << "Enter a single letter guess: ";
+		cin >> guess;
+		
+		if(processGuess(guess, guessLetters, guessCount, magicWord, hiddenWord) == false)
+		{
+			lives--;
+		}
+		display(lives, guessLetters, hiddenWord);
+		if (lives == 0)
+		{
+			cout << "lose! :(" << endl;
+			cin.ignore();
+		}
+		if (hiddenWord == magicWord)
+		{
+			cout << "win! :)" << endl;
+			cin.ignore();
+		}
 	}
-	cout << endl;
-	
-	int count = 0; //test
-	int a = 0; //test
-	bool b = true; //test
-	char c[26] = "ninjaChicken2000"; //test
-	
-	while (count < 8)
-	{
-		display(count, b, c);
-		count++;
-	}
+	//play again????????
 	cin.ignore();
 	return 0;
 }
 
-
+// Get and create magic word from user.
 string initMagicWord()
 {
 	string userInput; // I'd like to figure this out with a character array... 
 	cout << "Enter the secret word: ";
-	getline(cin, userInput); //scanf_s and scanf was casuing many errors... I probably was misussing. could not troubleshoot well.
-	cout << userInput << endl;                // test line
+	getline(cin, userInput);
 	return userInput;
 }
 
-void display(int count, bool win, string guesses)
+// Create a displayable "hidden" word which will be used to show length of word and 
+// positions/letters already guessed correctly.
+string initHiddenWord(string word)
 {
+	int wordLength = word.length();
+	for (int i = 0; i < wordLength; i++)
+	{
+		if (i < wordLength)
+		{
+			word[i] = '?';
+		}
+	}
+	return word;
+}
+
+// Checks guess against each position of magicWord then changes the position of hiddenWord to
+// display correct guesses. returns true if a good guess, returns false otherwise.
+bool processGuess(int guess, string &guessLetters, int &guessCount, string magicWord, string &hiddenWord)
+{
+	guessLetters[guessCount] = guess;
+	guessCount++;
+
+	unsigned int pos = 0;
+	int count = 0;
+	while (pos < magicWord.length())
+	{
+		if (magicWord[pos] == guess)
+		{
+			hiddenWord[pos] = guess;
+			count++;
+		}
+		pos++;
+	}
+	if (count > 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+// Comment here... (description)
+void display(int lives, string guesses, string hiddenWord)
+{
+	//refresh view
+	system("cls");
+	
+	// ------- display visual below -------
 		cout << "    ____" << endl;
 		cout << "   |    \\" << endl;
 
-	if (count == 0) //beginning of game.
+	if (lives == 7)
 	{
 		cout << "   | " << endl;
 		cout << "   | " << endl;
@@ -60,7 +119,7 @@ void display(int count, bool win, string guesses)
 		cout << "   | " << endl;
 		cout << "   | " << endl;
 	}
-	else if (count == 1)
+	else if (lives == 6)
 	{
 		cout << "   | " << endl;
 		cout << "   | " << endl;
@@ -68,7 +127,7 @@ void display(int count, bool win, string guesses)
 		cout << "   | " << endl;
 		cout << "   | " << endl;
 	}
-	else if (count == 2)
+	else if (lives == 5)
 	{
 		cout << "   | " << endl;
 		cout << "   | " << endl;
@@ -76,7 +135,7 @@ void display(int count, bool win, string guesses)
 		cout << "   |    ||" << endl;
 		cout << "   | " << endl;
 	}
-	else if (count == 3)
+	else if (lives == 4)
 	{
 		cout << "   | " << endl;
 		cout << "   | " << endl;
@@ -84,7 +143,7 @@ void display(int count, bool win, string guesses)
 		cout << "   |   /||" << endl;
 		cout << "   | " << endl;
 	}
-	else if (count == 4)
+	else if (lives == 3)
 	{
 		cout << "   | " << endl;
 		cout << "   | " << endl;
@@ -92,7 +151,7 @@ void display(int count, bool win, string guesses)
 		cout << "   |   /||\\" << endl;
 		cout << "   | " << endl;
 	}
-	else if (count == 5)
+	else if (lives == 2)
 	{
 		cout << "   | " << endl;
 		cout << "   | " << endl;
@@ -100,7 +159,7 @@ void display(int count, bool win, string guesses)
 		cout << "   |   /||\\" << endl;
 		cout << "   |    /" << endl;
 	}
-	else if (count == 6)
+	else if (lives == 1)
 	{
 		cout << "   | " << endl;
 		cout << "   | " << endl;
@@ -117,11 +176,15 @@ void display(int count, bool win, string guesses)
 		cout << "   |" << endl;
 	}
 		cout << "[][][][][][][][]" << endl;
+		// ------- display visual above -------
+
+		cout << "-----------------------------------" << endl;
+		cout << "GUESSES: " << guesses << endl;
+		cout << "HIDDEN WORD: " << hiddenWord << endl;
+		cout << "-----------------------------------" << endl;
 }
 
-	//cout << "-----------------------------------" << endl;
-	//cout << "GUESSES: ABCDEFGHIJKLMNOPQRSTUVWXYZ" << endl;
-	//cout << "-----------------------------------" << endl;
+
 
 //adding new line below...
 
