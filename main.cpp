@@ -8,7 +8,7 @@ using namespace std;
 
 string initMagicWord();
 string initHiddenWord(string);
-void processGuess(int, string &, int &, string, string &, bool &);
+bool processGuess(int, string &, int &, string, string &);
 void display(int, string, string);
 
 
@@ -21,29 +21,27 @@ int main(int argc, const char * argv[])
 	int guessCount = 0;
 	string guessLetters = "                         ";
 	char guess;
-	bool goodGuess = false;
+
 	
 	while (lives > 0)
 	{
 		cout << "Enter a single letter guess: ";
 		cin >> guess;
-		processGuess(guess, guessLetters, guessCount, magicWord, hiddenWord, goodGuess);
-		if(goodGuess == false)
+		
+		if(processGuess(guess, guessLetters, guessCount, magicWord, hiddenWord) == false)
 		{
 			lives--;
 		}
 		display(lives, guessLetters, hiddenWord);
-		if (lives = 0)
-		{
-			cout << "win! :)" << endl;
-			cin.ignore();
-			return 0;
-		}
-		if (hiddenWord == magicWord)
+		if (lives == 0)
 		{
 			cout << "lose! :(" << endl;
 			cin.ignore();
-			return 0;
+		}
+		if (hiddenWord == magicWord)
+		{
+			cout << "win! :)" << endl;
+			cin.ignore();
 		}
 	}
 	//play again????????
@@ -77,7 +75,7 @@ string initHiddenWord(string word)
 
 // Checks guess against each position of magicWord then changes the position of hiddenWord to
 // display correct guesses. returns true if a good guess, returns false otherwise.
-void processGuess(int guess, string &guessLetters, int &guessCount, string magicWord, string &hiddenWord, bool &goodGuess)
+bool processGuess(int guess, string &guessLetters, int &guessCount, string magicWord, string &hiddenWord)
 {
 	guessLetters[guessCount] = guess;
 	guessCount++;
@@ -91,12 +89,16 @@ void processGuess(int guess, string &guessLetters, int &guessCount, string magic
 			hiddenWord[pos] = guess;
 			count++;
 		}
+		pos++;
 	}
 	if (count > 0)
 	{
-		goodGuess = true;
+		return true;
 	}
-	goodGuess = false;
+	else
+	{
+		return false;
+	}
 }
 
 // Comment here... (description)
